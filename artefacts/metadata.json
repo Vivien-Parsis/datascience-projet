@@ -1,0 +1,52 @@
+{
+  "numeric_features": [
+    "vibration_rms",
+    "temperature_motor",
+    "current_phase_avg",
+    "pressure_level",
+    "rpm",
+    "hours_since_maintenance",
+    "ambient_temp",
+    "rul_hours",
+    "temp_relative",
+    "vibration_per_rpm",
+    "maintenance_stress"
+  ],
+  "categorical_features": [
+    "machine_type",
+    "operating_mode"
+  ],
+  "all_features": [
+    "vibration_rms",
+    "temperature_motor",
+    "current_phase_avg",
+    "pressure_level",
+    "rpm",
+    "hours_since_maintenance",
+    "ambient_temp",
+    "rul_hours",
+    "temp_relative",
+    "vibration_per_rpm",
+    "maintenance_stress",
+    "machine_type",
+    "operating_mode"
+  ],
+  "target": "failure_within_24h",
+  "n_train": 19233,
+  "n_test": 4809,
+  "class_balance": {
+    "0": 16385,
+    "1": 2848
+  },
+  "dropped_columns": [
+    "timestamp",
+    "machine_id",
+    "failure_type",
+    "estimated_repair_cost"
+  ],
+  "engineered_features": [
+    "temp_relative",
+    "vibration_per_rpm",
+    "maintenance_stress"
+  ]
+}

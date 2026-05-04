@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 sns.set_theme(style="whitegrid", palette="Set2")
 COLORS = {"no_fail": "#4C9BE8", "fail": "#E85D5D"}
 TARGET = "failure_within_24h"
-OUTPUT = "./figures"
+OUTPUT = "./figures/eda"
 import os; os.makedirs(OUTPUT, exist_ok=True)
 
 # ── Chargement des données ────────────────────────────────────
