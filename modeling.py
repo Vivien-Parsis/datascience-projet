@@ -42,9 +42,9 @@ from sklearn.inspection      import permutation_importance
 
 sns.set_theme(style="whitegrid", palette="Set2")
 COLORS  = {"no_fail": "#4C9BE8", "fail": "#E85D5D"}
-ARTDIR  = "/home/claude/artefacts"
-FIGDIR  = "/home/claude/figures_models"
-OUTDIR  = "/mnt/user-data/outputs"
+ARTDIR  = "./artefacts"
+FIGDIR  = "./figures/models"
+OUTDIR  = "./outputs"
 os.makedirs(FIGDIR, exist_ok=True)
 
 # ─────────────────────────────────────────────────────────────
