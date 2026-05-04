@@ -303,17 +303,17 @@ print("\n" + "="*60)
 print("SYNTHÈSE EDA — Points clés")
 print("="*60)
 print(f"""
-📊 DATASET
+DATASET
   • {df.shape[0]:,} observations | {df.shape[1]} variables
   • Période : {df['timestamp'].min().date()} → {df['timestamp'].max().date()}
   • 20 machines | 4 types (CNC, Pump, Compressor, Robotic Arm)
 
-🎯 VARIABLE CIBLE : failure_within_24h
+VARIABLE CIBLE : failure_within_24h
   • Classe 0 (pas de panne) : 20 482 ({20482/24042*100:.1f}%)
   • Classe 1 (panne < 24h)  : 3 560  ({3560/24042*100:.1f}%)
   • Ratio déséquilibre : ~5.75:1 → TRAITEMENT REQUIS
 
-❓ VALEURS MANQUANTES
+VALEURS MANQUANTES
   • vibration_rms    : 4.2%
   • pressure_level   : 3.8%
   • temperature_motor: 3.5%
@@ -321,19 +321,19 @@ print(f"""
   • rpm              : 2.2%
   → Imputation recommandée : médiane par machine_type
 
-🔗 TOP CORRÉLATIONS AVEC LA CIBLE
-  • temperature_motor  : +0.386 (⭐ signal fort)
-  • vibration_rms      : +0.264 (⭐ signal fort)
+TOP CORRÉLATIONS AVEC LA CIBLE
+  • temperature_motor  : +0.386 (signal fort)
+  • vibration_rms      : +0.264 (signal fort)
   • rul_hours          : -0.253 (inverse : moins de vie = plus de risque)
   • current_phase_avg  : +0.157
   → ambient_temp, rpm, pressure_level : corrélation faible
 
-⚠️  OUTLIERS
+ OUTLIERS
   • vibration_rms : 478 outliers (2.0%)
   • rpm           : 373 outliers (1.6%)
   → Impact à analyser : peuvent correspondre à de vraies pannes
 
-📋 RECOMMANDATIONS POUR LA SUITE
+RECOMMANDATIONS POUR LA SUITE
   1. Imputer les NaN (médiane par machine_type)
   2. Gérer le déséquilibre (class_weight + SMOTE)
   3. Encoder : machine_type, operating_mode (OneHot)
