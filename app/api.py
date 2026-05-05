@@ -18,7 +18,7 @@ import os
 # ─────────────────────────────────────────────────────────────
 # CHARGEMENT DES ARTEFACTS
 # ─────────────────────────────────────────────────────────────
-ARTDIR = "./artefacts"
+ARTDIR = "../artefacts"
 
 try:
     preprocessor    = joblib.load(f"{ARTDIR}/preprocessor.pkl")
