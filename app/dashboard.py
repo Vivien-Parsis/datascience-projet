@@ -27,7 +27,7 @@ st.set_page_config(
 )
 
 API_URL  = "http://localhost:8000"
-ARTDIR   = "./artefacts"
+ARTDIR   = "../artefacts"
 
 # ─────────────────────────────────────────────────────────────
 # STYLES CSS
@@ -71,7 +71,7 @@ st.markdown("""
 # ─────────────────────────────────────────────────────────────
 @st.cache_data
 def load_data():
-    df = pd.read_csv('./industrial_machine_maintenance.csv',
+    df = pd.read_csv('../industrial_machine_maintenance.csv',
                      parse_dates=['timestamp'])
     return df
 
