@@ -106,7 +106,7 @@ ax6_twin.set_ylabel("Taux de panne (%)", color='red')
 
 plt.savefig(f"{OUTPUT}/fig1_overview.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.1 générée")
+print("Fig.1 générée")
 
 # =============================================================
 # FIGURE 2 — Distributions des capteurs (classe 0 vs 1)
@@ -135,7 +135,7 @@ for ax, col in zip(axes.flatten(), NUMERIC_SENSORS):
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig2_distributions.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.2 générée")
+print("Fig.2 générée")
 
 # =============================================================
 # FIGURE 3 — Boxplots capteurs vs cible
@@ -162,7 +162,7 @@ for ax, col in zip(axes.flatten(), NUMERIC_SENSORS):
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig3_boxplots.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.3 générée")
+print("Fig.3 générée")
 
 # =============================================================
 # FIGURE 4 — Matrice de corrélation
@@ -192,7 +192,7 @@ axes[1].set_xlabel("Coefficient de corrélation de Pearson")
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig4_correlations.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.4 générée")
+print("Fig.4 générée")
 
 # =============================================================
 # FIGURE 5 — Analyse du déséquilibre & stratégie
@@ -235,7 +235,7 @@ ax.legend()
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig5_imbalance.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.5 générée")
+print("Fig.5 générée")
 
 # =============================================================
 # FIGURE 6 — Scatter plots & relations entre capteurs clés
@@ -266,7 +266,7 @@ for ax, (x_col, y_col) in zip(axes, pairs):
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig6_scatter.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.6 générée")
+print("Fig.6 générée")
 
 # =============================================================
 # FIGURE 7 — Analyse des outliers
@@ -294,7 +294,7 @@ for ax, col in zip(axes.flatten(), NUMERIC_SENSORS):
 plt.tight_layout()
 plt.savefig(f"{OUTPUT}/fig7_outliers.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.7 générée")
+print("Fig.7 générée")
 
 # =============================================================
 # SYNTHÈSE STATISTIQUE
@@ -342,4 +342,4 @@ RECOMMANDATIONS POUR LA SUITE
   6. Normaliser pour LR et MLP, pas nécessaire pour RF/XGB
 """)
 
-print("✅ Toutes les figures générées dans:", OUTPUT)
+print("Toutes les figures générées dans:", OUTPUT)
