@@ -1,9 +1,7 @@
 """
-=============================================================
 ÉTAPE 3 — Modélisation Multi-Algorithmes & Évaluation
 Projet : Maintenance Prédictive Industrielle
 Tâche   : failure_within_24h (Classification Binaire)
-=============================================================
 Modèles :
   1. Régression Logistique (baseline linéaire)
   2. Random Forest         (ensemble, non-linéaire)
@@ -17,7 +15,6 @@ Modèles :
   - Courbes ROC & Precision-Recall
   - Ajustement de seuil de décision
   - Feature Importance + SHAP
-=============================================================
 """
 
 import numpy as np
@@ -47,9 +44,7 @@ FIGDIR  = "./figures/models"
 OUTDIR  = "./outputs"
 os.makedirs(FIGDIR, exist_ok=True)
 
-# ─────────────────────────────────────────────────────────────
 # 0. CHARGEMENT DES ARTEFACTS
-# ─────────────────────────────────────────────────────────────
 print("="*60)
 print("0. CHARGEMENT DES ARTEFACTS")
 print("="*60)
@@ -69,9 +64,7 @@ print(f"X_train : {X_train.shape} | X_test : {X_test.shape}")
 print(f"X_smote : {X_smote.shape} (après SMOTE)")
 print(f"Features ({len(feature_names)}) : {feature_names}")
 
-# ─────────────────────────────────────────────────────────────
 # 1. DÉFINITION DES MODÈLES
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("1. DÉFINITION DES MODÈLES")
 print("="*60)
@@ -127,9 +120,7 @@ MODELS = {
 for name in MODELS:
     print(f"{name}")
 
-# ─────────────────────────────────────────────────────────────
 # 2. CROSS-VALIDATION (sur données SMOTE)
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("2. CROSS-VALIDATION STRATIFIÉE (5 folds)")
 print("="*60)
@@ -152,9 +143,7 @@ for name, model in MODELS.items():
           f"Recall={cv_res['test_recall'].mean():.3f} | "
           f"ROC-AUC={cv_res['test_roc_auc'].mean():.3f}")
 
-# ─────────────────────────────────────────────────────────────
 # 3. ENTRAÎNEMENT FINAL SUR SMOTE + ÉVALUATION TEST
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("3. ENTRAÎNEMENT FINAL & ÉVALUATION SUR TEST SET")
 print("="*60)
@@ -199,9 +188,7 @@ for name, model in MODELS.items():
     print(f"    Temps    : {elapsed:.1f}s")
     print(f"    {classification_report(y_test, y_pred, target_names=['Pas de panne','Panne 24h'], digits=3)}")
 
-# ─────────────────────────────────────────────────────────────
 # 4. AJUSTEMENT DE SEUIL (meilleur modèle)
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("4. AJUSTEMENT DU SEUIL DE DÉCISION")
 print("="*60)
@@ -239,9 +226,7 @@ print(f"  → Precision : {recall_target['precision']:.3f}")
 print(f"  → Recall    : {recall_target['recall']:.3f}")
 print(f"  → F1        : {recall_target['f1']:.3f}")
 
-# ─────────────────────────────────────────────────────────────
 # 5. FEATURE IMPORTANCE (meilleur modèle)
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("5. FEATURE IMPORTANCE")
 print("="*60)
@@ -268,9 +253,7 @@ perm_df = pd.DataFrame({
 print("Top 10 Permutation Importance :")
 print(perm_df.head(10).to_string(index=False))
 
-# ─────────────────────────────────────────────────────────────
 # 6. VISUALISATIONS COMPLÈTES
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("6. GÉNÉRATION DES FIGURES")
 print("="*60)
@@ -449,9 +432,7 @@ plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig13_importance_threshold.png", dpi=150, bbox_inches='tight')
 plt.close(); print("Fig.13")
 
-# ─────────────────────────────────────────────────────────────
 # 7. TABLEAU COMPARATIF FINAL
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("7. TABLEAU COMPARATIF FINAL")
 print("="*60)
@@ -476,9 +457,7 @@ for name in MODELS:
 df_compare = pd.DataFrame(rows)
 print(df_compare.to_string(index=False))
 
-# ─────────────────────────────────────────────────────────────
 # 8. SÉLECTION & JUSTIFICATION DU MODÈLE FINAL
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("8. SÉLECTION DU MODÈLE FINAL")
 print("="*60)
@@ -509,9 +488,7 @@ RECOMMANDATION OPÉRATIONNELLE :
   → Accepte un taux de fausses alertes légèrement plus élevé
 """)
 
-# ─────────────────────────────────────────────────────────────
 # 9. SAUVEGARDE
-# ─────────────────────────────────────────────────────────────
 print("="*60)
 print("9. SAUVEGARDE DES MODÈLES")
 print("="*60)
