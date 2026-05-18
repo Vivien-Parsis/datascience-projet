@@ -1,9 +1,7 @@
 """
-=============================================================
 EDA COMPLÈTE — Maintenance Prédictive Industrielle
 Tâche : Prédiction de Panne dans les 24h (Classification Binaire)
 Variable cible : failure_within_24h
-=============================================================
 """
 
 import pandas as pd
@@ -29,11 +27,9 @@ NUMERIC_SENSORS = ['vibration_rms', 'temperature_motor', 'current_phase_avg',
                    'pressure_level', 'rpm', 'hours_since_maintenance',
                    'ambient_temp', 'rul_hours']
 
-print("✅ Dataset chargé :", df.shape)
+print("Dataset chargé :", df.shape)
 
-# =============================================================
 # FIGURE 1 — Vue d'ensemble du dataset
-# =============================================================
 fig = plt.figure(figsize=(18, 10))
 fig.suptitle("Fig.1 — Vue d'ensemble du dataset", fontsize=16, fontweight='bold', y=1.01)
 gs = gridspec.GridSpec(2, 3, figure=fig, hspace=0.45, wspace=0.35)
@@ -108,9 +104,7 @@ plt.savefig(f"{OUTPUT}/fig1_overview.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.1 générée")
 
-# =============================================================
 # FIGURE 2 — Distributions des capteurs (classe 0 vs 1)
-# =============================================================
 fig, axes = plt.subplots(2, 4, figsize=(20, 10))
 fig.suptitle("Fig.2 — Distributions des capteurs par classe\n(Bleu = Pas de panne | Rouge = Panne dans 24h)",
              fontsize=14, fontweight='bold')
@@ -137,9 +131,7 @@ plt.savefig(f"{OUTPUT}/fig2_distributions.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.2 générée")
 
-# =============================================================
 # FIGURE 3 — Boxplots capteurs vs cible
-# =============================================================
 fig, axes = plt.subplots(2, 4, figsize=(20, 9))
 fig.suptitle("Fig.3 — Boxplots : signaux capteurs vs variable cible",
              fontsize=14, fontweight='bold')
@@ -164,9 +156,7 @@ plt.savefig(f"{OUTPUT}/fig3_boxplots.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.3 générée")
 
-# =============================================================
 # FIGURE 4 — Matrice de corrélation
-# =============================================================
 fig, axes = plt.subplots(1, 2, figsize=(18, 7))
 fig.suptitle("Fig.4 — Analyse des corrélations", fontsize=14, fontweight='bold')
 
@@ -194,9 +184,7 @@ plt.savefig(f"{OUTPUT}/fig4_correlations.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.4 générée")
 
-# =============================================================
 # FIGURE 5 — Analyse du déséquilibre & stratégie
-# =============================================================
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 fig.suptitle("Fig.5 — Déséquilibre des classes & analyse", fontsize=14, fontweight='bold')
 
@@ -237,9 +225,7 @@ plt.savefig(f"{OUTPUT}/fig5_imbalance.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.5 générée")
 
-# =============================================================
 # FIGURE 6 — Scatter plots & relations entre capteurs clés
-# =============================================================
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
 fig.suptitle("Fig.6 — Relations entre capteurs clés (coloré par cible)",
              fontsize=14, fontweight='bold')
@@ -268,9 +254,7 @@ plt.savefig(f"{OUTPUT}/fig6_scatter.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.6 générée")
 
-# =============================================================
 # FIGURE 7 — Analyse des outliers
-# =============================================================
 fig, axes = plt.subplots(2, 4, figsize=(20, 9))
 fig.suptitle("Fig.7 — Détection et analyse des outliers (méthode IQR)",
              fontsize=14, fontweight='bold')
@@ -296,9 +280,7 @@ plt.savefig(f"{OUTPUT}/fig7_outliers.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.7 générée")
 
-# =============================================================
 # SYNTHÈSE STATISTIQUE
-# =============================================================
 print("\n" + "="*60)
 print("SYNTHÈSE EDA — Points clés")
 print("="*60)
