@@ -125,7 +125,7 @@ MODELS = {
 }
 
 for name in MODELS:
-    print(f"  ✅ {name}")
+    print(f"{name}")
 
 # ─────────────────────────────────────────────────────────────
 # 2. CROSS-VALIDATION (sur données SMOTE)
@@ -311,7 +311,7 @@ for ax, metric, title in zip(axes.flatten(), metric_labels, metric_titles):
 
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig9_metrics.png", dpi=150, bbox_inches='tight')
-plt.close(); print("✅ Fig.9")
+plt.close(); print("Fig.9")
 
 # ── Figure 10 : Courbes ROC & PR ──
 fig, axes = plt.subplots(1, 2, figsize=(16, 7))
@@ -346,7 +346,7 @@ ax2.legend(fontsize=9); ax2.set_xlim(0,1); ax2.set_ylim(0,1.02)
 
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig10_roc_pr.png", dpi=150, bbox_inches='tight')
-plt.close(); print("✅ Fig.10")
+plt.close(); print("Fig.10")
 
 # ── Figure 11 : Matrices de confusion ──
 fig, axes = plt.subplots(1, 4, figsize=(20, 5))
@@ -373,7 +373,7 @@ for ax, (name, _) in zip(axes, MODELS.items()):
 
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig11_confusion.png", dpi=150, bbox_inches='tight')
-plt.close(); print("✅ Fig.11")
+plt.close(); print("Fig.11")
 
 # ── Figure 12 : Cross-validation boxplots ──
 fig, axes = plt.subplots(1, 3, figsize=(18, 6))
@@ -403,7 +403,7 @@ for ax, metric, title in zip(axes, ['test_f1','test_recall','test_roc_auc'],
 
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig12_crossval.png", dpi=150, bbox_inches='tight')
-plt.close(); print("✅ Fig.12")
+plt.close(); print("Fig.12")
 
 # ── Figure 13 : Feature Importance + Ajustement seuil ──
 fig, axes = plt.subplots(1, 2, figsize=(18, 7))
@@ -447,7 +447,7 @@ ax.fill_between(df_thr['threshold'],
 
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig13_importance_threshold.png", dpi=150, bbox_inches='tight')
-plt.close(); print("✅ Fig.13")
+plt.close(); print("Fig.13")
 
 # ─────────────────────────────────────────────────────────────
 # 7. TABLEAU COMPARATIF FINAL
@@ -519,7 +519,7 @@ print("="*60)
 for name, model in trained_models.items():
     fname = name.lower().replace(' ','_').replace('(','').replace(')','')
     joblib.dump(model, f"{ARTDIR}/model_{fname}.pkl")
-    print(f"  ✅ model_{fname}.pkl")
+    print(f"model_{fname}.pkl")
 
 joblib.dump(trained_models[best_name], f"{ARTDIR}/best_model.pkl")
 joblib.dump(df_compare, f"{ARTDIR}/comparison_table.pkl")
@@ -535,6 +535,6 @@ results_export = {
 with open(f"{ARTDIR}/results.json","w") as f:
     json.dump(results_export, f, indent=2)
 
-print(f"\n✅ Modèle final sauvegardé : best_model.pkl")
-print(f"✅ Résultats exportés     : results.json")
-print("\n✅ MODÉLISATION TERMINÉE — Prêt pour Dashboard + API")
+print(f"\nModèle final sauvegardé : best_model.pkl")
+print(f"Résultats exportés     : results.json")
+print("\nMODÉLISATION TERMINÉE — Prêt pour Dashboard + API")
