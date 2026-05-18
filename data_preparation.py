@@ -40,9 +40,7 @@ ARTDIR  = "./artefacts"
 FIGDIR  = "./figures/data_preparation"
 for d in [ARTDIR, FIGDIR]: os.makedirs(d, exist_ok=True)
 
-# ─────────────────────────────────────────────────────────────
 # 1. CHARGEMENT & AUDIT INITIAL
-# ─────────────────────────────────────────────────────────────
 print("="*60)
 print("1. CHARGEMENT & AUDIT")
 print("="*60)
@@ -51,9 +49,7 @@ df = pd.read_csv('./industrial_machine_maintenance.csv',
                  parse_dates=['timestamp'])
 print(f"Shape initiale : {df.shape}")
 
-# ─────────────────────────────────────────────────────────────
 # 2. DÉTECTION DATA LEAKAGE
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("2. DÉTECTION DATA LEAKAGE")
 print("="*60)
@@ -79,9 +75,7 @@ print("→ estimated_repair_cost=0 ↔ target=0 TOUJOURS :", (df[df[TARGET]==0][
 COLS_DROP = ['timestamp', 'machine_id', 'failure_type', 'estimated_repair_cost']
 print(f"\nColonnes supprimées (leakage/identifiants): {COLS_DROP}")
 
-# ─────────────────────────────────────────────────────────────
 # 3. FEATURE ENGINEERING
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("3. FEATURE ENGINEERING")
 print("="*60)
@@ -108,9 +102,7 @@ print(f"   Corrélation avec cible : {df_clean['maintenance_stress'].corr(df_cle
 
 print(f"\nShape après feature engineering : {df_clean.shape}")
 
-# ─────────────────────────────────────────────────────────────
 # 4. DÉFINITION DES FEATURES
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("4. DÉFINITION DES FEATURES")
 print("="*60)
@@ -132,9 +124,7 @@ print(f"Total features : {len(ALL_FEATURES)}")
 X = df_clean[ALL_FEATURES]
 y = df_clean[TARGET]
 
-# ─────────────────────────────────────────────────────────────
 # 5. SPLIT STRATIFIÉ TRAIN / TEST
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("5. SPLIT STRATIFIÉ (80/20)")
 print("="*60)
@@ -148,9 +138,7 @@ print(f"Train positifs : {y_train.sum():,} ({y_train.mean()*100:.1f}%)")
 print(f"Test  positifs : {y_test.sum():,}  ({y_test.mean()*100:.1f}%)")
 print("→ Stratified split : proportions préservées ")
 
-# ─────────────────────────────────────────────────────────────
 # 6. PIPELINE SKLEARN (sans data leakage)
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("6. CONSTRUCTION DU PIPELINE SKLEARN")
 print("="*60)
@@ -191,9 +179,7 @@ print(f"\nShape X_train après preprocessing : {X_train_proc.shape}")
 print(f"Shape X_test  après preprocessing : {X_test_proc.shape}")
 print(f"Features finales ({len(feature_names_out)}) : {feature_names_out}")
 
-# ─────────────────────────────────────────────────────────────
 # 7. GESTION DU DÉSÉQUILIBRE — Comparaison des stratégies
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("7. STRATÉGIES DE GESTION DU DÉSÉQUILIBRE")
 print("="*60)
@@ -225,9 +211,7 @@ print(f"UnderSampling: {y_rus.sum():,} positifs / {len(y_rus):,} total ({y_rus.m
 print("\n→ Stratégie recommandée pour la modélisation : SMOTE + class_weight")
 print("→ class_weight='balanced' testé sur chaque modèle en complément")
 
-# ─────────────────────────────────────────────────────────────
 # 8. CROSS-VALIDATION STRATIFIÉE
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("8. CROSS-VALIDATION STRATIFIÉE")
 print("="*60)
@@ -238,9 +222,7 @@ for i, (_, val_idx) in enumerate(skf.split(X_train_proc, y_train)):
     fold_pos = y_train.values[val_idx].mean() * 100
     print(f"  Fold {i+1} : {len(val_idx):,} obs | {fold_pos:.1f}% positifs")
 
-# ─────────────────────────────────────────────────────────────
 # 9. VISUALISATIONS
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("9. GÉNÉRATION DES FIGURES DE PRÉPARATION")
 print("="*60)
@@ -372,9 +354,7 @@ plt.savefig(f"{FIGDIR}/fig8_preparation.png", dpi=150, bbox_inches='tight')
 plt.close()
 print("Fig.8 générée")
 
-# ─────────────────────────────────────────────────────────────
 # 10. SAUVEGARDE DES ARTEFACTS
-# ─────────────────────────────────────────────────────────────
 print("\n" + "="*60)
 print("10. SAUVEGARDE DES ARTEFACTS")
 print("="*60)
