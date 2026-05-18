@@ -91,19 +91,19 @@ df_clean = df.drop(columns=COLS_DROP).copy()
 # Feature 1 : Température relative (écart à la température ambiante)
 # → Capte la surchauffe moteur indépendamment de la saison
 df_clean['temp_relative'] = df_clean['temperature_motor'] - df_clean['ambient_temp']
-print("✅ temp_relative = temperature_motor - ambient_temp")
+print("temp_relative = temperature_motor - ambient_temp")
 print(f"   Corrélation avec cible : {df_clean['temp_relative'].corr(df_clean[TARGET]):.3f}")
 
 # Feature 2 : Ratio vibration / rpm (vibration normalisée par la vitesse)
 # → Detect anomalies vibratoires indépendantes de la vitesse
 df_clean['vibration_per_rpm'] = df_clean['vibration_rms'] / (df_clean['rpm'].clip(lower=1))
-print("✅ vibration_per_rpm = vibration_rms / rpm")
+print("vibration_per_rpm = vibration_rms / rpm")
 print(f"   Corrélation avec cible : {df_clean['vibration_per_rpm'].corr(df_clean[TARGET]):.3f}")
 
 # Feature 3 : Score de stress cumulé (maintenance overdue)
 # → Plus la machine tourne longtemps sans maintenance, plus le risque monte
 df_clean['maintenance_stress'] = np.log1p(df_clean['hours_since_maintenance'])
-print("✅ maintenance_stress = log(1 + hours_since_maintenance)")
+print("maintenance_stress = log(1 + hours_since_maintenance)")
 print(f"   Corrélation avec cible : {df_clean['maintenance_stress'].corr(df_clean[TARGET]):.3f}")
 
 print(f"\nShape après feature engineering : {df_clean.shape}")
@@ -146,7 +146,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 print(f"Train : {X_train.shape[0]:,} obs  | Test : {X_test.shape[0]:,} obs")
 print(f"Train positifs : {y_train.sum():,} ({y_train.mean()*100:.1f}%)")
 print(f"Test  positifs : {y_test.sum():,}  ({y_test.mean()*100:.1f}%)")
-print("→ Stratified split : proportions préservées ✅")
+print("→ Stratified split : proportions préservées ")
 
 # ─────────────────────────────────────────────────────────────
 # 6. PIPELINE SKLEARN (sans data leakage)
@@ -176,7 +176,7 @@ preprocessor = ColumnTransformer(transformers=[
 print("Pipeline sklearn construit :")
 print("  Numérique  : SimpleImputer(median) → StandardScaler")
 print("  Catégoriel : SimpleImputer(mode)   → OneHotEncoder")
-print("→ FIT uniquement sur X_train (pas de data leakage) ✅")
+print("→ FIT uniquement sur X_train (pas de data leakage) ")
 
 # Fit sur train uniquement, transform sur train ET test
 preprocessor.fit(X_train)
@@ -232,7 +232,7 @@ print("\n" + "="*60)
 print("8. CROSS-VALIDATION STRATIFIÉE")
 print("="*60)
 skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-print("StratifiedKFold(n_splits=5) — proportions de classes préservées ✅")
+print("StratifiedKFold(n_splits=5) — proportions de classes préservées ")
 print("→ Sera utilisée lors de l'entraînement des modèles")
 for i, (_, val_idx) in enumerate(skf.split(X_train_proc, y_train)):
     fold_pos = y_train.values[val_idx].mean() * 100
@@ -370,7 +370,7 @@ ax.text(0.05, 0.95, pipeline_text, transform=ax.transAxes,
 plt.tight_layout()
 plt.savefig(f"{FIGDIR}/fig8_preparation.png", dpi=150, bbox_inches='tight')
 plt.close()
-print("✅ Fig.8 générée")
+print("Fig.8 générée")
 
 # ─────────────────────────────────────────────────────────────
 # 10. SAUVEGARDE DES ARTEFACTS
@@ -411,7 +411,7 @@ for fname in os.listdir(ARTDIR):
     print(f"  {fname:<35} {size:>10,} bytes")
 
 print("\n" + "="*60)
-print("✅ PRÉPARATION TERMINÉE — Prêt pour la modélisation")
+print("PRÉPARATION TERMINÉE — Prêt pour la modélisation")
 print("="*60)
 print(f"""
 RÉSUMÉ :
