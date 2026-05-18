@@ -55,8 +55,6 @@ Ce projet conçoit un **système intelligent de maintenance prédictive** capabl
 
 ## Dataset
 
-**Source :** [Kaggle — Industrial Machine Predictive Maintenance](https://www.kaggle.com/datasets/tatheerabbas/industrial-machine-predictive-maintenance)
-
 | Caractéristique | Valeur |
 | --- | --- |
 | Enregistrements | 24 042 |
