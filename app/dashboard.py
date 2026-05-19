@@ -106,7 +106,7 @@ with st.sidebar:
     page = st.radio("Navigation", [
         "🏠 Vue d'ensemble",
         "🔮 Simulateur de panne",
-        "📊 Comparaison des modèles",
+        "📊 Comparaison des modeles",
         "🔍 Importance des variables",
         "⚙️ API & Infos système"
     ])
@@ -298,7 +298,7 @@ elif page == "🔮 Simulateur de panne":
                     fig_bar = px.bar(factors_df, x='importance', y='feature',
                                      orientation='h', color='importance',
                                      color_continuous_scale='RdYlGn_r',
-                                     title="Importance des variables (modèle)")
+                                     title="Importance des variables (modele)")
                     fig_bar.update_layout(height=250, showlegend=False,
                                           coloraxis_showscale=False,
                                           yaxis={'categoryorder': 'total ascending'})
@@ -351,18 +351,18 @@ elif page == "🔮 Simulateur de panne":
 # ─────────────────────────────────────────────────────────────
 # PAGE 3 — COMPARAISON DES MODÈLES
 # ─────────────────────────────────────────────────────────────
-elif page == "📊 Comparaison des modèles":
-    st.markdown('<div class="main-title">📊 Comparaison des Modèles</div>', unsafe_allow_html=True)
+elif page == "📊 Comparaison des modeles":
+    st.markdown('<div class="main-title">📊 Comparaison des Modeles</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Analyse comparative des performances sur le jeu de test réel</div>', unsafe_allow_html=True)
 
     if comp_df is not None:
         # Tableau interactif
         st.markdown('<div class="section-title">📋 Tableau comparatif complet</div>', unsafe_allow_html=True)
-        st.dataframe(comp_df.set_index('Modèle'), use_container_width=True)
+        st.dataframe(comp_df.set_index('Modele'), use_container_width=True)
 
         # Graphes radar + barres
         metrics_plot = ['Accuracy','Precision','Recall','F1-Score','ROC-AUC','PR-AUC']
-        models_names = comp_df['Modèle'].tolist()
+        models_names = comp_df['Modele'].tolist()
         model_colors = ['#4C9BE8','#2ECC71','#E67E22','#9B59B6']
 
         col1, col2 = st.columns(2)
@@ -374,7 +374,7 @@ elif page == "📊 Comparaison des modèles":
                 vals = [float(row[m]) for m in metrics_plot]
                 fig_radar.add_trace(go.Scatterpolar(
                     r=vals + [vals[0]], theta=metrics_plot + [metrics_plot[0]],
-                    name=row['Modèle'], line_color=model_colors[i], fill='toself',
+                    name=row['Modele'], line_color=model_colors[i], fill='toself',
                     fillcolor=model_colors[i], opacity=0.15
                 ))
             fig_radar.update_layout(
@@ -390,7 +390,7 @@ elif page == "📊 Comparaison des modèles":
             for metric, color in [('F1-Score','#2ECC71'),('Recall','#E85D5D')]:
                 fig_comp.add_trace(go.Bar(
                     name=metric,
-                    x=comp_df['Modèle'],
+                    x=comp_df['Modele'],
                     y=[float(v) for v in comp_df[metric]],
                     marker_color=color, opacity=0.8,
                     text=[f'{float(v):.3f}' for v in comp_df[metric]],
@@ -421,7 +421,7 @@ Gradient Boosting a des performances identiques mais est **3x plus lent** à ent
 Le MLP n'apporte aucune plus-value sur ce jeu de données tabulaire structuré.
         """)
     else:
-        st.error("Artefacts non disponibles. Lancez d'abord modeling.py")
+        st.error("Artefacts non disponibles. Exécutez d'abord modeling.ipynb (Kernel > Restart & Run All).")
 
 
 # ─────────────────────────────────────────────────────────────
@@ -517,12 +517,12 @@ response = requests.post(
 print(response.json())""", language='python')
 
     with col2:
-        st.markdown('<div class="section-title">📊 Informations sur le modèle</div>', unsafe_allow_html=True)
+        st.markdown('<div class="section-title">📊 Informations sur le modele</div>', unsafe_allow_html=True)
         try:
             r = requests.get(f"{API_URL}/model-info", timeout=3)
             if r.status_code == 200:
                 info = r.json()
-                st.metric("Modèle", info['model_name'])
+                st.metric("Modele", info['model_name'])
                 st.metric("ROC-AUC",  f"{info['test_metrics']['roc_auc']:.4f}")
                 st.metric("Recall",    f"{info['test_metrics']['recall']:.4f}")
                 st.metric("F1-Score",  f"{info['test_metrics']['f1']:.4f}")
@@ -530,7 +530,7 @@ print(response.json())""", language='python')
                 st.metric("Features", info['n_features'])
         except:
             if results:
-                st.metric("Modèle", results.get('best_model_name','N/A'))
+                st.metric("Modele", results.get('best_model_name','N/A'))
                 metrics = results.get('test_metrics',{}).get(results.get('best_model_name',''),{})
                 if metrics:
                     st.metric("ROC-AUC",  f"{metrics.get('roc_auc',0):.4f}")
@@ -539,14 +539,15 @@ print(response.json())""", language='python')
 
         st.markdown('<div class="section-title">🗂️ Architecture du pipeline</div>', unsafe_allow_html=True)
         st.code("""
-📁 projet_maintenance/
-├── data_preparation.py   # Pipeline sklearn
-├── modeling.py           # Entraînement 4 modèles
+📁 datascience-projet/
+├── EDA_Maintenance_Predictive.ipynb   # Analyse exploratoire (fig1-fig7)
+├── data_preparation.ipynb             # Pipeline sklearn, SMOTE (fig8)
+├── modeling.ipynb                     # 4 modeles, évaluation (fig9-fig13)
 ├── app/
-│   ├── api.py            # FastAPI REST
-│   └── dashboard.py      # Streamlit
-└── artefacts/
-    ├── preprocessor.pkl  # Pipeline fit
-    ├── best_model.pkl    # Random Forest
-    └── results.json      # Métriques
+│   ├── api.py                         # FastAPI REST
+│   └── dashboard.py                   # Streamlit (cette interface)
+└── artefacts/                         # Générés par les notebooks
+    ├── preprocessor.pkl               # Pipeline sklearn fitté
+    ├── best_model.pkl                 # Random Forest déployé
+    └── results.json                   # Métriques & seuils
         """, language='text')
