@@ -1,7 +1,8 @@
 # 🔧 Système Intelligent de Maintenance Prédictive Industrielle
 
 > Projet Data Science — EFREI M1 Dev. Manager Full Stack | 2025-26  
-> Sujet 1 — Classification Binaire : prédiction de panne dans les 24h
+> Sujet 1 — Classification Binaire : prédiction de panne dans les 24h  
+> 🔗 **Dépôt Git :** [github.com/Vivien-Parsis/datascience-projet](https://github.com/Vivien-Parsis/datascience-projet)
 
 ---
 
@@ -43,17 +44,20 @@ Ce projet conçoit un **système intelligent de maintenance prédictive** capabl
 ┌─────────────────────────────────────────────────────────┐
 │                     PIPELINE COMPLET                    │
 │                                                         │
-│  Raw Data  →  EDA  →  Preprocessing  →  Modélisation   │
+│  Raw Data  →  EDA  →  Preprocessing  →  Modélisation    │
+│  (notebook)  (notebook)  (notebook)                     │
 │                              ↓                          │
 │              artefacts/ (modèles .pkl, métriques .json) │
 │                         ↙        ↘                      │
-│              API FastAPI       Dashboard Streamlit       │
+│              API FastAPI       Dashboard Streamlit      │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Dataset
+
+**Source :** [Kaggle — Industrial Machine Predictive Maintenance](https://www.kaggle.com/datasets/tatheerabbas/industrial-machine-predictive-maintenance)
 
 | Caractéristique | Valeur |
 | --- | --- |
@@ -90,11 +94,15 @@ Ce projet conçoit un **système intelligent de maintenance prédictive** capabl
 
 ### 1. Analyse exploratoire (EDA)
 
+📓 `EDA_Maintenance_Predictive.ipynb` — 35 cellules (12 code + 23 markdown)
+
 - Audit complet : valeurs manquantes (2–4% sur 5 capteurs), outliers, distributions
 - Analyse de corrélation : `temperature_motor` (+0.386) et `vibration_rms` (+0.264) sont les signaux les plus discriminants
 - Vérification du déséquilibre de classes → stratégie de rééchantillonnage requise
 
 ### 2. Feature Engineering
+
+📓 `data_preparation.ipynb` — 38 cellules (13 code + 25 markdown)
 
 Trois nouvelles variables créées :
 
@@ -122,7 +130,7 @@ Quatre stratégies comparées :
 | Stratégie | Positifs train | Approche |
 | --- | --- | --- |
 | Baseline | 14.8% | Aucune |
-| SMOTE ✅ | 50.0% | Génération synthétique (retenu) |
+| **SMOTE ✅** | 50.0% | Génération synthétique (retenu) |
 | Random OverSampling | 50.0% | Duplication aléatoire |
 | Random UnderSampling | 50.0% | Réduction majoritaire |
 
@@ -136,6 +144,8 @@ Quatre stratégies comparées :
 ---
 
 ## Résultats des modèles
+
+📓 `modeling.ipynb` — 44 cellules (16 code + 28 markdown)
 
 Évaluation sur le **jeu de test réel** (4 809 observations, non rééchantillonné) :
 
@@ -170,7 +180,7 @@ Quatre stratégies comparées :
 ### Seuil de décision
 
 - **Seuil défaut (0.5) :** F1=0.992, Recall=0.993
-- **Seuil production recommandé (0.05) :** Recall=1.000 — aucune panne non détectée, au prix de plus de fausses alertes. Adapté au contexte industriel où un faux négatif (panne non détectée) coûte bien plus cher qu'un faux positif (fausse alerte).
+- **Seuil production recommandé (0.05) :** Recall=1.000 — aucune panne non détectée, au prix de plus de fausses alertes. Adapté au contexte industriel où un faux négatif coûte bien plus cher qu'un faux positif.
 
 ---
 
@@ -180,6 +190,7 @@ Quatre stratégies comparées :
 
 - Python 3.10+
 - pip
+- Jupyter Notebook ou JupyterLab
 
 ### Dépendances
 
@@ -189,7 +200,7 @@ pip install -r requirements.txt
 
 **`requirements.txt` :**
 
-```bash
+```none
 pandas>=2.0
 numpy>=1.24
 scikit-learn>=1.3
@@ -203,43 +214,64 @@ streamlit>=1.28
 pydantic>=2.0
 joblib>=1.3
 requests>=2.31
+notebook>=7.0
+ipykernel>=6.0
 ```
 
 ---
 
 ## Lancement
 
-### Étape 1 — Préparation des données
+> ⚠️ **Ordre d'exécution obligatoire** — les notebooks doivent être exécutés dans l'ordre ci-dessous : chacun produit les artefacts dont le suivant a besoin.
+
+### Étape 1 — Analyse exploratoire
 
 ```bash
-python data_preparation.py
+jupyter notebook EDA_Maintenance_Predictive.ipynb
 ```
 
-Génère tous les artefacts dans `artefacts/` : preprocessor, splits train/test, stratégies de rééchantillonnage.
+Exécuter toutes les cellules (**Kernel > Restart & Run All**).  
+Produit les figures dans `figures/eda/` (fig1 à fig7). Aucun artefact `.pkl` généré.
 
-### Étape 2 — Entraînement des modèles
+### Étape 2 — Préparation des données
 
 ```bash
-python modeling.py
+jupyter notebook data_preparation.ipynb
 ```
 
-Entraîne les 4 modèles, génère les figures de comparaison et sauvegarde `best_model.pkl`.
+Exécuter toutes les cellules. Génère dans `artefacts/` :
+`preprocessor.pkl`, `X_train_proc.pkl`, `X_test_proc.pkl`, `y_train.pkl`, `y_test.pkl`, `feature_names.pkl`, `resampling_strategies.pkl`, `stratified_kfold.pkl`, `metadata.json`
 
-### Étape 3 — Lancer l'API
+### Étape 3 — Entraînement des modèles
+
+```bash
+jupyter notebook modeling.ipynb
+```
+
+> ⚠️ Prérequis : l'étape 2 doit avoir été exécutée en entier.
+
+Exécuter toutes les cellules. Génère dans `artefacts/` :
+`best_model.pkl`, `model_*.pkl`, `comparison_table.pkl`, `feature_importance.pkl`, `results.json`
+
+### Étape 4 — Lancer l'API
 
 ```bash
 cd app
 uvicorn api:app --host 0.0.0.0 --port 8000 --reload
 ```
 
+> ⚠️ Prérequis : les étapes 2 et 3 doivent être complètes — l'API charge `preprocessor.pkl`, `best_model.pkl` et `results.json` au démarrage.
+
 Documentation interactive (Swagger) : [http://localhost:8000/docs](http://localhost:8000/docs)
 
-### Étape 4 — Lancer le Dashboard
+### Étape 5 — Lancer le Dashboard
 
 ```bash
 cd app
 streamlit run dashboard.py
 ```
+
+> L'API (étape 4) doit être active pour que le simulateur fonctionne. Les autres pages fonctionnent en mode hors-ligne.
 
 Dashboard accessible à : [http://localhost:8501](http://localhost:8501)
 
@@ -352,30 +384,33 @@ Liste toutes les features attendues avec leurs types, plages et valeurs valides.
 ## Structure des fichiers
 
 ```none
-projet_maintenance/
+datascience-projet/
 │
-├── data_preparation.py        # Pipeline sklearn : nettoyage, features, split, rééchantillonnage
-├── modeling.py                # Entraînement 4 modèles, évaluation, feature importance
-├── eda_maintenance.py         # Analyse exploratoire complète (7 figures)
+├── EDA_Maintenance_Predictive.ipynb       # Analyse exploratoire — 35 cellules (fig1 à fig7)
+├── data_preparation.ipynb                 # Pipeline sklearn, split, SMOTE — 38 cellules (fig8)
+├── modeling.ipynb                         # 4 modèles, évaluation, importance — 44 cellules (fig9 à fig13)
 │
 ├── app/
-│   ├── api.py                 # API FastAPI (predict, health, model-info, batch)
-│   └── dashboard.py           # Dashboard Streamlit (5 pages)
+│   ├── api.py                             # API FastAPI (predict, health, model-info, batch)
+│   └── dashboard.py                       # Dashboard Streamlit (5 pages)
 │
-├── artefacts/
-│   ├── preprocessor.pkl       # Pipeline sklearn fitté sur X_train
-│   ├── best_model.pkl         # Random Forest — modèle final
-│   ├── model_*.pkl            # Tous les modèles entraînés
-│   ├── feature_names.pkl      # Noms des features après OneHotEncoding
-│   ├── feature_importance.pkl # Permutation Importance DataFrame
-│   ├── comparison_table.pkl   # Tableau comparatif des modèles
-│   ├── results.json           # Métriques et seuils de décision
-│   └── metadata.json          # Configuration du pipeline
+├── artefacts/                             # Générés par les notebooks (ne pas modifier manuellement)
+│   ├── preprocessor.pkl                   # Pipeline sklearn fitté sur X_train
+│   ├── best_model.pkl                     # Random Forest — modèle final déployé
+│   ├── model_logistic_regression.pkl
+│   ├── model_random_forest.pkl
+│   ├── model_gradient_boosting.pkl
+│   ├── model_mlp_deep_learning.pkl
+│   ├── feature_names.pkl                  # Noms des features après OneHotEncoding
+│   ├── feature_importance.pkl             # Permutation Importance DataFrame
+│   ├── comparison_table.pkl               # Tableau comparatif des modèles
+│   ├── results.json                       # Métriques et seuils de décision
+│   └── metadata.json                      # Configuration du pipeline (pour l'API)
 │
 ├── figures/
-│   ├── /eda                   # Figures EDA (fig1 à fig7)
-│   ├── /data_preparation      # Figures préparation (fig8)
-│   └── /models               # Figures modélisation (fig9 à fig13)
+│   ├── eda/                               # Fig.1 à Fig.7 — générées par EDA_Maintenance_Predictive.ipynb
+│   ├── data_preparation/                  # Fig.8 — générée par data_preparation.ipynb
+│   └── models/                            # Fig.9 à Fig.13 — générées par modeling.ipynb
 │
 ├── industrial_machine_maintenance.csv
 ├── requirements.txt
@@ -389,10 +424,11 @@ projet_maintenance/
 | Décision | Choix | Justification |
 | --- | --- | --- |
 | Tâche | Classification binaire | `failure_within_24h` — tâche la plus actionnelle |
-| Imputation | Médiane | Robuste aux outliers des capteurs |
+| Format d'analyse | Jupyter Notebooks | Documentation inline, cellules d'interprétation, reproductibilité |
+| Imputation | Médiane | Robuste aux outliers des capteurs industriels |
 | Encodage catégoriel | OneHotEncoder | Pas de relation ordinale entre types de machines |
 | Normalisation | StandardScaler | Requis pour LR et MLP, neutre pour RF/XGB |
-| Anti-leakage | `fit()` sur train uniquement | Garantit la validité des résultats |
+| Anti-leakage | `fit()` sur train uniquement | Garantit la validité des résultats sur le test set |
 | Rééchantillonnage | SMOTE | Génère des exemples synthétiques réalistes vs duplication brute |
 | Validation | StratifiedKFold(5) | Préserve les proportions de classes dans chaque fold |
 | Métrique prioritaire | Recall | Minimiser les faux négatifs (pannes non détectées) |
@@ -403,6 +439,6 @@ projet_maintenance/
 
 ---
 
-## Auteurs
+## Auteur
 
-- Vivien PARSIS
+- **Vivien PARSIS**
