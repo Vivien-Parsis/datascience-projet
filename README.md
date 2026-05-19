@@ -45,7 +45,7 @@ Ce projet conçoit un **système intelligent de maintenance prédictive** capabl
 │                     PIPELINE COMPLET                    │
 │                                                         │
 │  Raw Data  →  EDA  →  Preprocessing  →  Modélisation    │
-│  (notebook)  (notebook)  (notebook)                     │
+│             (notebook)  (notebook)  (notebook)          │
 │                              ↓                          │
 │              artefacts/ (modèles .pkl, métriques .json) │
 │                         ↙        ↘                      │
